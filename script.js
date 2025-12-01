@@ -1505,6 +1505,8 @@ canvas.addEventListener('touchstart', e => {
         let posX = scaleByPixelRatio(touches[i].pageX);
         let posY = scaleByPixelRatio(touches[i].pageY);
         updatePointerDownData(pointers[i + 1], touches[i].identifier, posX, posY);
+
+        checkClick({ clientX: touches[i].clientX, clientY: touches[i].clientY });
     }
 });
 
