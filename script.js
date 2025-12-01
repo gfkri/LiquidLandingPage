@@ -1176,6 +1176,13 @@ function checkClick(e) {
         const rect = text.getBoundingClientRect();
         if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
              multipleSplats(parseInt(Math.random() * 20) + 5);
+             if (isMobile()) {
+                 text.classList.add('hovered');
+                 if (text.hoverTimeout) clearTimeout(text.hoverTimeout);
+                 text.hoverTimeout = setTimeout(() => {
+                     text.classList.remove('hovered');
+                 }, 500);
+             }
         }
     });
 }
