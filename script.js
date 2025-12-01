@@ -24,32 +24,7 @@ SOFTWARE.
 
 'use strict';
 
-// Mobile promo section
-
-const promoPopup = document.getElementsByClassName('promo')[0];
-const promoPopupClose = document.getElementsByClassName('promo-close')[0];
-
-if (isMobile()) {
-    setTimeout(() => {
-        promoPopup.style.display = 'table';
-    }, 20000);
-}
-
-promoPopupClose.addEventListener('click', e => {
-    promoPopup.style.display = 'none';
-});
-
-const appleLink = document.getElementById('apple_link');
-appleLink.addEventListener('click', e => {
-    ga('send', 'event', 'link promo', 'app');
-    window.open('https://apps.apple.com/us/app/fluid-simulation/id1443124993');
-});
-
-const googleLink = document.getElementById('google_link');
-googleLink.addEventListener('click', e => {
-    ga('send', 'event', 'link promo', 'app');
-    window.open('https://play.google.com/store/apps/details?id=games.paveldogreat.fluidsimfree');
-});
+// Mobile promo section removed
 
 // Simulation section
 
@@ -1168,6 +1143,45 @@ function updateKeywords () {
 updateKeywords();
 initFramebuffers();
 multipleSplats(parseInt(Math.random() * 20) + 5);
+
+const landingTexts = document.querySelectorAll('.landing-page h1, .landing-page h2, .landing-page .tags');
+
+function checkHover(e) {
+    const x = e.clientX;
+    const y = e.clientY;
+    let isHovering = false;
+    
+    landingTexts.forEach(text => {
+        const rect = text.getBoundingClientRect();
+        if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
+            text.classList.add('hovered');
+            isHovering = true;
+        } else {
+            text.classList.remove('hovered');
+        }
+    });
+
+    if (isHovering) {
+        document.body.style.cursor = 'pointer';
+    } else {
+        document.body.style.cursor = 'default';
+    }
+}
+
+function checkClick(e) {
+    const x = e.clientX;
+    const y = e.clientY;
+    
+    landingTexts.forEach(text => {
+        const rect = text.getBoundingClientRect();
+        if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
+             multipleSplats(parseInt(Math.random() * 20) + 5);
+        }
+    });
+}
+
+window.addEventListener('mousemove', checkHover);
+window.addEventListener('click', checkClick);
 
 let lastUpdateTime = Date.now();
 let colorUpdateTimer = 0.0;

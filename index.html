@@ -12,21 +12,19 @@
         <link rel="apple-touch-icon" href="logo.png">
         <link rel="icon" href="logo.png">
 
-        <title>WebGL Fluid Simulation</title>
-        <meta name="description" content="A WebGL fluid simulation that works in mobile browsers.">
+        <title>Theodoros</title>
+        <meta name="description" content="Theodoros - Landing Page">
 
         <meta property="og:type" content="website">
-        <meta property="og:title" content="Webgl Fluid Simulation">
-        <meta property="og:description" content="A WebGL fluid simulation that works in mobile browsers.">
+        <meta property="og:title" content="Theodoros">
+        <meta property="og:description" content="Theodoros - Landing Page">
         <meta property="og:url" content="https://paveldogreat.github.io/WebGL-Fluid-Simulation/">
         <meta property="og:image" content="https://paveldogreat.github.io/WebGL-Fluid-Simulation/logo.png">
 
         <script type="text/javascript" src="dat.gui.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <style>
-            @font-face {
-                font-family: 'iconfont';
-                src: url('iconfont.ttf') format('truetype');
-            }
+            @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;700;900&display=swap');
 
             * {
                 user-select: none;
@@ -42,6 +40,7 @@
                 position: fixed;
                 width: 100%;
                 height: 100%;
+                font-family: 'Montserrat', sans-serif;
             }
 
             canvas {
@@ -50,140 +49,79 @@
             }
 
             .dg {
+                display: none;
+            }
+
+            .landing-page {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                text-align: center;
+                color: #ffffff;
+                z-index: 10;
+                pointer-events: none;
+                width: 100%;
+                padding: 20px;
+                box-sizing: border-box;
+                text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            }
+
+            .landing-page h1 {
+                font-size: 5em;
+                margin: 0;
+                font-weight: 400;
+                letter-spacing: 5px;
+                text-transform: uppercase;
+            }
+
+            .landing-page h2 {
+                font-size: 1.2em;
+                margin: 20px 0;
+                font-weight: 500;
+                line-height: 1.5;
+            }
+
+            .landing-page .tags {
+                font-size: 1.1em;
+                margin-bottom: 40px;
+                font-weight: 700;
                 opacity: 0.9;
             }
 
-            .dg .property-name {
-                overflow: visible;
+            .landing-page h1, .landing-page h2, .landing-page .tags {
+                transition: all 0.3s ease;
             }
 
-            .bigFont {
-                font-size: 150%;
-                color: #8C8C8C;
-            }
-
-            .cr.function.appBigFont {
-                font-size: 150%;
-                line-height: 27px;
+            .landing-page h1.hovered, .landing-page h2.hovered, .landing-page .tags.hovered {
+                transform: scale(1.1);
                 color: #A5F8D3;
-                background-color: #023C40;
             }
 
-            .cr.function.appBigFont .property-name {
-                float: none;
+            .landing-page .social-links {
+                pointer-events: auto;
             }
 
-            .cr.function.appBigFont .icon {
-                position: sticky;
-                bottom: 27px;
-            }
-
-            .icon {
-                font-family: 'iconfont';
-                font-size: 130%;
-                float: right;
-            }
-
-            .twitter:before {
-                content: 'a';
-            }
-
-            .github:before {
-                content: 'b';
-            }
-
-            .app:before {
-                content: 'c';
-            }
-
-            .discord:before {
-                content: 'd';
-            }
-
-            .promo {
-                display: none;
-                /* display: table; */
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                z-index: 1;
-                overflow: auto;
-                color: lightblue;
-                background-color: rgba(0,0,0,0.4);
-                animation: promo-appear-animation 0.35s ease-out;
-            }
-
-            .promo-middle {
-                display: table-cell;
-                vertical-align: middle;
-            }
-
-            .promo-content {
-                width: 80vw;
-                height: 80vh;
-                max-width: 80vh;
-                max-height: 80vw;
-                margin: auto;
-                padding: 0;
-                font-size: 2.8vmax;
-                font-family: Futura, "Trebuchet MS", Arial, sans-serif;
-                text-align: center;
-                background-image: url("promo_back.png");
-                background-position: center;
-                background-repeat: no-repeat;
-                background-size: cover;
-                border-radius: 15px;
-                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-            }
-
-            .promo-header {
-                height: 10%;
-                padding: 2px 16px;
-            }
-
-            .promo-close {
-                width: 10%;
-                height: 100%;
-                text-align: left;
-                float: left;
-                font-size: 1.3em;
-                /* transition: 0.2s; */
-            }
-
-            .promo-close:hover {
-                /* transform: scale(1.25); */
-                cursor: pointer;
-            }
-
-            .promo-body {
-                padding: 8px 16px 16px 16px;
-                margin: auto;
-            }
-
-            .promo-body p {
-                margin-top: 0;
-                mix-blend-mode: color-dodge;
-            }
-
-            .link {
-                width: 100%;
+            .landing-page .social-links a {
+                color: #ffffff;
+                font-size: 2.5em;
+                margin: 0 20px;
+                text-decoration: none;
+                transition: all 0.3s ease;
                 display: inline-block;
             }
 
-            .link img {
-                width: 100%;
+            .landing-page .social-links a:hover {
+                transform: scale(1.2);
+                color: #A5F8D3;
             }
 
-            @keyframes promo-appear-animation {
-                0% {
-                    transform: scale(2.0);
-                    opacity: 0;
+            @media (max-width: 768px) {
+                .landing-page h1 {
+                    font-size: 3em;
                 }
-                100% {
-                    transform: scale(1.0);
-                    opacity: 1;
+                .landing-page h2 {
+                    font-size: 1em;
                 }
             }
         </style>
@@ -197,25 +135,14 @@
     <body>
         <canvas></canvas>
 
-        <!-- Mother of God, pls forgive me -->
-        <div class="promo">
-            <div class="promo-middle">
-                <div class="promo-content">
-                    <div class="promo-header">
-                        <span class="promo-close">&times;</span>
-                    </div>
-                    <div class="promo-body">
-                        <p>Try Fluid Simulation app!</p>
-                        <div class="links-container">
-                            <a class="link" id="apple_link" target="_blank">
-                                <img class="link-img" alt="Download on the App Store" src="app_badge.png"/>
-                            </a>
-                            <a class="link" id="google_link" target="_blank">
-                                <img class="link-img" alt="Get it on Google Play" src="gp_badge.png"/>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+        <div class="landing-page">
+            <h1>Theodoros</h1>
+            <h2>T.he H.umorous E.ngineer O.r D.esigner O.f R.eal O.utstanding S.tuff</h2>
+            <div class="tags">cosmopolitan | partyanimal | smart | geek | greek</div>
+            <div class="social-links">
+                <a href="https://www.instagram.com/monsieur.tt/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <!-- <a href="https://twitter.com" target="_blank"><i class="fab fa-x-twitter"></i></a>
+                <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a> -->
             </div>
         </div>
 
